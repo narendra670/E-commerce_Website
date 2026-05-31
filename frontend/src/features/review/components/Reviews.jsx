@@ -82,8 +82,7 @@ export const Reviews = ({productId,averageRating}) => {
         3:0,
         2:0,
         1:0
-    }
-
+    };
     (reviews ?? []).filter(Boolean).forEach((review)=>{
         ratingCounts[review.rating]=ratingCounts[review.rating]+1
     })
@@ -116,7 +115,7 @@ export const Reviews = ({productId,averageRating}) => {
                             <Stack rowGap={2}>
                                 {
                                     [5,4,3,2,1].map((number)=>(
-                                        <Stack flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} columnGap={1}>
+                                        <Stack key={number} flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} columnGap={1}>
                                             <Typography sx={{whiteSpace:"nowrap"}}>{number} star</Typography>
                                             <LinearProgress sx={{width:"100%",height:"1rem",borderRadius:"4px"}} variant='determinate' value={(ratingCounts[number]/reviews?.length)*100}/>   
                                             <Typography>{parseInt(ratingCounts[number]/reviews?.length*100)}%</Typography>

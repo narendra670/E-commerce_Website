@@ -6,6 +6,7 @@ import { selectLoggedInUser } from '../../auth/AuthSlice';
 import {deleteReviewByIdAsync, selectReviewStatus, updateReviewByIdAsync} from '../ReviewSlice'
 import { useForm } from "react-hook-form"
 import {LoadingButton} from '@mui/lab'
+import { motion } from 'framer-motion'
 
 export const ReviewItem = ({id,username,userid,comment,rating,createdAt}) => {
 
@@ -48,9 +49,9 @@ export const ReviewItem = ({id,username,userid,comment,rating,createdAt}) => {
             <Stack flexDirection={'row'} columnGap={2}>
                 <Stack> 
                         <Typography variant='h6' fontSize={"1.1rem"} fontWeight={500}>{username}</Typography>
-                        <motiondiv>
+                        <motion.div>
                             <Rating size={edit?is480?'medium':'large':"small"} readOnly={!edit} onChange={(e)=>setEditRating(e.target.value)} value={edit?editRating:rating}/>
-                        </motiondiv>
+                        </motion.div>
                 </Stack>
             </Stack>
 

@@ -62,7 +62,7 @@ export const ProductDetails = () => {
 
     const totalReviewRating=reviews.reduce((acc,review)=>acc+review.rating,0)
     const totalReviews=reviews.length
-    const averageRating=parseInt(Math.ceil(totalReviewRating/totalReviews))
+    const averageRating=totalReviews?parseInt(Math.ceil(totalReviewRating/totalReviews)):0
 
     const wishlistItemAddStatus=useSelector(selectWishlistItemAddStatus)
     const wishlistItemDeleteStatus=useSelector(selectWishlistItemDeleteStatus)
@@ -205,7 +205,7 @@ export const ProductDetails = () => {
                         {!is1420 && <Stack sx={{display:"flex",rowGap:'1.5rem',height:"100%",overflowY:"scroll"}}>
                             {
                                 product && product.images.map((image,index)=>(
-                                    <motion.div  whileHover={{scale:1.1}} whileTap={{scale:1}} style={{width:"200px",cursor:"pointer"}} onClick={()=>setSelectedImageIndex(index)}>
+                                    <motion.div key={index} whileHover={{scale:1.1}} whileTap={{scale:1}} style={{width:"200px",cursor:"pointer"}} onClick={()=>setSelectedImageIndex(index)}>
                                         <img style={{width:"100%",objectFit:"contain"}} src={image} alt={`${product.title} image`} />
                                     </motion.div>
                                 ))
@@ -261,7 +261,7 @@ export const ProductDetails = () => {
                             </Stack>
 
                             {/* price */}
-                            <Typography variant='h5'>${product?.price}</Typography>
+                            <Typography variant='h5'>₹{product?.price}</Typography>
                         </Stack>
 
                         {/* description */}
@@ -284,7 +284,7 @@ export const ProductDetails = () => {
                                 <Stack flexDirection={'row'} columnGap={is387?".5rem":".2rem"} >
                                     {
                                         COLORS.map((color,index)=>(
-                                            <div style={{backgroundColor:"white",border:selectedColorIndex===index?`1px solid ${theme.palette.primary.dark}`:"",width:is340?"40px":"50px",height:is340?"40px":"50px",display:"flex",justifyContent:"center",alignItems:"center",borderRadius:"100%",}}>
+                                            <div key={index} style={{backgroundColor:"white",border:selectedColorIndex===index?`1px solid ${theme.palette.primary.dark}`:"",width:is340?"40px":"50px",height:is340?"40px":"50px",display:"flex",justifyContent:"center",alignItems:"center",borderRadius:"100%",}}>
                                                 <div onClick={()=>setSelectedColorIndex(index)} style={{width:"40px",height:"40px",border:color==='#F6F6F6'?"1px solid grayText":"",backgroundColor:color,borderRadius:"100%"}}></div>
                                             </div>
                                         ))
@@ -298,7 +298,7 @@ export const ProductDetails = () => {
                                 <Stack flexDirection={'row'} columnGap={is387?".5rem":"1rem"}>
                                     {
                                         SIZES.map((size)=>(
-                                            <motion.div onClick={()=>handleSizeSelect(size)} whileHover={{scale:1.050}} whileTap={{scale:1}} style={{border:selectedSize===size?'':"1px solid grayText",borderRadius:"8px",width:"30px",height:"30px",display:"flex",justifyContent:"center",alignItems:"center",cursor:"pointer",padding:"1.2rem",backgroundColor:selectedSize===size?"#DB4444":"whitesmoke",color:selectedSize===size?"white":""}}>
+                                            <motion.div key={size} onClick={()=>handleSizeSelect(size)} whileHover={{scale:1.050}} whileTap={{scale:1}} style={{border:selectedSize===size?'':"1px solid grayText",borderRadius:"8px",width:"30px",height:"30px",display:"flex",justifyContent:"center",alignItems:"center",cursor:"pointer",padding:"1.2rem",backgroundColor:selectedSize===size?"#DB4444":"whitesmoke",color:selectedSize===size?"white":""}}>
                                                 <p>{size}</p>
                                             </motion.div>
                                         ))

@@ -219,8 +219,8 @@ export const ProductList = () => {
                                 <FormGroup onChange={handleBrandFilters}>
                                     {
                                         brands?.map((brand)=>(
-                                            <motion.div style={{width:"fit-content"}} whileHover={{x:5}} whileTap={{scale:0.9}}>
-                                                <FormControlLabel sx={{ml:1}} control={<Checkbox whileHover={{scale:1.1}} />} label={brand.name} value={brand._id} />
+                                            <motion.div key={brand._id} style={{width:"fit-content"}} whileHover={{x:5}} whileTap={{scale:0.9}}>
+                                                <FormControlLabel sx={{ml:1}} control={<Checkbox />} label={brand.name} value={brand._id} />
                                             </motion.div>
                                         ))
                                     }
@@ -240,8 +240,8 @@ export const ProductList = () => {
                                 <FormGroup onChange={handleCategoryFilters}>
                                     {
                                         categories?.map((category)=>(
-                                            <motion.div style={{width:"fit-content"}} whileHover={{x:5}} whileTap={{scale:0.9}}>
-                                                <FormControlLabel sx={{ml:1}} control={<Checkbox whileHover={{scale:1.1}} />} label={category.name} value={category._id} />
+                                            <motion.div key={category._id} style={{width:"fit-content"}} whileHover={{x:5}} whileTap={{scale:0.9}}>
+                                                <FormControlLabel sx={{ml:1}} control={<Checkbox />} label={category.name} value={category._id} />
                                             </motion.div>
                                         ))
                                     }
