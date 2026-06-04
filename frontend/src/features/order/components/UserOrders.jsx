@@ -37,7 +37,7 @@ export const UserOrders = () => {
 
     useEffect(()=>{
         dispatch(getOrderByUserIdAsync(loggedInUser?._id))
-    },[dispatch])
+    },[dispatch, loggedInUser?._id])
 
 
     useEffect(()=>{
@@ -62,7 +62,7 @@ export const UserOrders = () => {
             dispatch(resetOrderFetchStatus())
             dispatch(resetCartItemAddStatus())
         }
-    },[])
+    },[dispatch])
 
 
     const handleAddToCart=(product)=>{

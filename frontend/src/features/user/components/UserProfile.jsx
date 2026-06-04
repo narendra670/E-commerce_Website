@@ -2,7 +2,7 @@ import { Avatar, Button, Paper, Stack, Typography, useTheme ,TextField, useMedia
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectUserInfo } from '../UserSlice'
-import { addAddressAsync, resetAddressAddStatus, resetAddressDeleteStatus, resetAddressUpdateStatus, selectAddressAddStatus, selectAddressDeleteStatus, selectAddressErrors, selectAddressStatus, selectAddressUpdateStatus, selectAddresses } from '../../address/AddressSlice'
+import { addAddressAsync, resetAddressAddStatus, resetAddressDeleteStatus, resetAddressUpdateStatus, selectAddressAddStatus, selectAddressDeleteStatus, selectAddressStatus, selectAddressUpdateStatus, selectAddresses } from '../../address/AddressSlice'
 import { Address } from '../../address/components/Address'
 import { useForm } from 'react-hook-form'
 import { LoadingButton } from '@mui/lab'
@@ -11,7 +11,7 @@ import {toast} from 'react-toastify'
 export const UserProfile = () => {
 
     const dispatch=useDispatch()
-    const {register,handleSubmit,watch,reset,formState: { errors }} = useForm()
+    const {register,handleSubmit,reset} = useForm()
     const status=useSelector(selectAddressStatus)
     const userInfo=useSelector(selectUserInfo)
     const addresses=useSelector(selectAddresses)
@@ -69,7 +69,7 @@ export const UserProfile = () => {
             dispatch(resetAddressUpdateStatus())
             dispatch(resetAddressDeleteStatus())
         }
-    },[])
+    },[dispatch])
 
     const handleAddAddress=(data)=>{
         const address={...data,user:userInfo._id}

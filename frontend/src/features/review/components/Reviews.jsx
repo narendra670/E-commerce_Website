@@ -1,5 +1,5 @@
-import { Button, IconButton, LinearProgress, Pagination, Rating, Stack, TextField, Typography, useMediaQuery } from '@mui/material'
-import React, { useEffect, useRef, useState } from 'react'
+import { Button, LinearProgress, Rating, Stack, TextField, Typography, useMediaQuery } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createReviewAsync, resetReviewAddStatus, resetReviewDeleteStatus, resetReviewUpdateStatus, selectReviewAddStatus, selectReviewDeleteStatus, selectReviewStatus, selectReviewUpdateStatus, selectReviews } from '../ReviewSlice'
 import { ReviewItem } from './ReviewItem'
@@ -10,17 +10,16 @@ import {toast} from 'react-toastify'
 import CreateIcon from '@mui/icons-material/Create';
 import {MotionConfig, motion} from 'framer-motion'
 import { useTheme } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close';
+
 
 export const Reviews = ({productId,averageRating}) => {
 
     const dispatch=useDispatch()
     const reviews=useSelector(selectReviews)
     const [value,setValue]=useState(1)
-    const {register,handleSubmit,reset,formState: { errors }} = useForm()
+    const {register,handleSubmit,reset} = useForm()
     const loggedInUser=useSelector(selectLoggedInUser)
     const reviewStatus=useSelector(selectReviewStatus)
-    const ref=useRef(null)
     
 
 
@@ -46,7 +45,7 @@ export const Reviews = ({productId,averageRating}) => {
         reset()
         setValue(1)
         
-    },[reviewAddStatus])
+    },[reviewAddStatus, reset])
 
     useEffect(()=>{
 
@@ -74,7 +73,7 @@ export const Reviews = ({productId,averageRating}) => {
             dispatch(resetReviewDeleteStatus())
             dispatch(resetReviewUpdateStatus())
         }
-    },[])
+    },[dispatch])
 
     const ratingCounts={
         5:0,

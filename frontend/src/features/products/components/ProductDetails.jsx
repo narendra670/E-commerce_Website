@@ -77,7 +77,7 @@ export const ProductDetails = () => {
             dispatch(fetchProductByIdAsync(id))
             dispatch(fetchReviewsByProductIdAsync(id))
         }
-    },[id])
+    },[id, dispatch])
 
     useEffect(()=>{
 
@@ -129,7 +129,7 @@ export const ProductDetails = () => {
             dispatch(resetWishlistItemAddStatus())
             dispatch(resetCartItemAddStatus())
         }
-    },[])
+    },[dispatch])
 
     const handleAddToCart=()=>{
         const item={user:loggedInUser._id,product:id,quantity}
@@ -189,7 +189,7 @@ export const ProductDetails = () => {
                             {
                                 product && product.images.map((image,index)=>(
                                     <motion.div key={index} whileHover={{scale:1.1}} whileTap={{scale:1}} style={{width:"200px",cursor:"pointer"}} onClick={()=>setSelectedImageIndex(index)}>
-                                        <img style={{width:"100%",objectFit:"contain"}} src={image} alt={`${product.title} image`} />
+                                        <img style={{width:"100%",objectFit:"contain"}} src={image} alt={product.title} />
                                     </motion.div>
                                 ))
                             }
@@ -215,7 +215,7 @@ export const ProductDetails = () => {
                                 </Stack>
                                 :
                                 <div style={{width:"100%"}}>
-                                    <img style={{width:"100%",objectFit:"contain",aspectRatio:1/1}} src={product?.images[selectedImageIndex]} alt={`${product?.title} image`} />
+                                    <img style={{width:"100%",objectFit:"contain",aspectRatio:1/1}} src={product?.images[selectedImageIndex]} alt={product?.title || ''} />
                                 </div>
                             }
                         </Stack>

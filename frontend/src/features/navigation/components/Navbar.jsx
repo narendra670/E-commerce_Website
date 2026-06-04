@@ -8,7 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, useNavigate } from 'react-router-dom';
-import { Badge, Button, Chip, Stack, useMediaQuery, useTheme } from '@mui/material';
+import { Badge, Button, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUserInfo } from '../../user/UserSlice';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -22,7 +22,6 @@ import { selectProductIsFilterOpen, toggleFilters } from '../../products/Product
 
 
 export const Navbar=({isProductList=false})=> {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const userInfo=useSelector(selectUserInfo)
   const cartItems=useSelector(selectCartItems)

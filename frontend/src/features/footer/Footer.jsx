@@ -4,7 +4,6 @@ import React from 'react'
 import { QRCodePng, appStorePng, googlePlayPng ,facebookPng,instagramPng,twitterPng,linkedinPng} from '../../assets'
 import SendIcon from '@mui/icons-material/Send';
 import { MotionConfig, motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 
 
 

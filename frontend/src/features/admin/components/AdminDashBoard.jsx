@@ -36,9 +36,6 @@ export const AdminDashBoard = () => {
     const isProductFilterOpen=useSelector(selectProductIsFilterOpen)
     const totalResults=useSelector(selectProductTotalResults)
     
-    const is1200=useMediaQuery(theme.breakpoints.down(1200))
-    const is800=useMediaQuery(theme.breakpoints.down(800))
-    const is700=useMediaQuery(theme.breakpoints.down(700))
     const is600=useMediaQuery(theme.breakpoints.down(600))
     const is488=useMediaQuery(theme.breakpoints.down(488))
 
@@ -54,7 +51,7 @@ export const AdminDashBoard = () => {
 
         dispatch(fetchProductsAsync(finalFilters))
         
-    },[filters,sort,page])
+    },[filters,sort,page,dispatch])
 
     const handleBrandFilters=(e)=>{
 

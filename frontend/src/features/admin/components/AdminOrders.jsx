@@ -25,11 +25,9 @@ export const AdminOrders = () => {
   const orderUpdateStatus=useSelector(selectOrderUpdateStatus)
   const theme=useTheme()
   const is1620=useMediaQuery(theme.breakpoints.down(1620))
-  const is1200=useMediaQuery(theme.breakpoints.down(1200))
-  const is820=useMediaQuery(theme.breakpoints.down(820))
   const is480=useMediaQuery(theme.breakpoints.down(480))
 
-  const {register,handleSubmit,formState: { errors },} = useForm()
+  const {register,handleSubmit} = useForm()
 
   useEffect(()=>{
     dispatch(getAllOrdersAsync())
@@ -49,7 +47,7 @@ export const AdminOrders = () => {
     return ()=>{
       dispatch(resetOrderUpdateStatus())
     }
-  },[])
+  },[dispatch])
 
 
   const handleUpdateOrder=(data)=>{

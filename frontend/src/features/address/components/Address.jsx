@@ -1,19 +1,17 @@
 import { LoadingButton } from '@mui/lab'
-import { Button, Paper, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Button, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteAddressByIdAsync, selectAddressErrors, selectAddressStatus, updateAddressByIdAsync } from '../AddressSlice'
+import { deleteAddressByIdAsync, selectAddressStatus, updateAddressByIdAsync } from '../AddressSlice'
 
 export const Address = ({id,type,street,postalCode,country,phoneNumber,state,city}) => {
 
     const theme=useTheme()
     const dispatch=useDispatch()
-    const {register,handleSubmit,watch,reset,formState: { errors }} = useForm()
+    const {register,handleSubmit,reset} = useForm()
     const [edit,setEdit]=useState(false)
-    const [open, setOpen] = useState(false);
     const status=useSelector(selectAddressStatus)
-    const error=useSelector(selectAddressErrors)
     
     const is480=useMediaQuery(theme.breakpoints.down(480))
 

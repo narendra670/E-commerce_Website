@@ -10,7 +10,6 @@ import { selectLoggedInUser } from '../../auth/AuthSlice';
 import { emptyWishlistAnimation, loadingAnimation } from '../../../assets';
 import Lottie from 'lottie-react' 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { useForm } from "react-hook-form"
 import {addToCartAsync, resetCartItemAddStatus, selectCartItemAddStatus, selectCartItems} from '../../cart/CartSlice'
 import { motion } from 'framer-motion';
 
@@ -28,8 +27,6 @@ export const Wishlist = () => {
 
   const [editIndex,setEditIndex]=useState(-1)
   const [editValue,setEditValue]=useState('')
-  const {register,handleSubmit,watch,formState: { errors }} = useForm()
-
   const theme=useTheme()
   const is1130=useMediaQuery(theme.breakpoints.down(1130))
   const is642=useMediaQuery(theme.breakpoints.down(642))
@@ -116,7 +113,7 @@ export const Wishlist = () => {
       dispatch(resetWishlistItemDeleteStatus())
       dispatch(resetWishlistItemAddStatus())
     }
-  },[])
+  },[dispatch])
 
   const handleNoteUpdate=(wishlistItemId)=>{
     const update={_id:wishlistItemId,note:editValue}

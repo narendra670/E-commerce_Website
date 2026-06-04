@@ -41,7 +41,7 @@ export const CartItem = ({id,thumbnail,title,category,brand,price,quantity,stock
         <Stack flexDirection={'row'} rowGap={'1rem'} alignItems={'center'} columnGap={2} flexWrap={'wrap'}>
 
             <Stack width={is552?"auto":'200px'} height={is552?"auto":'200px'} component={Link} to={`/product-details/${productId}`}>
-                <img style={{width:"100%",height:is552?"auto":"100%",aspectRatio:is552?1/1:'',objectFit:'contain'}} src={thumbnail} alt={`${title} image unavailabe`} />
+                <img style={{width:"100%",height:is552?"auto":"100%",aspectRatio:is552?1/1:'',objectFit:'contain'}} src={thumbnail} alt={title} />
             </Stack>
 
             <Stack alignSelf={''}>

@@ -1,4 +1,4 @@
-import { Stack, TextField, Typography ,Button, Menu, MenuItem, Select, Grid, FormControl, Radio, Paper, IconButton, Box, useTheme, useMediaQuery} from '@mui/material'
+import { Stack, TextField, Typography ,Button, Grid, FormControl, Radio, Paper, IconButton, useTheme, useMediaQuery} from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import React, { useEffect, useState } from 'react'
 import { Cart } from '../../cart/components/Cart'
@@ -20,7 +20,7 @@ export const Checkout = () => {
     const addresses=useSelector(selectAddresses)
     const [selectedAddress,setSelectedAddress]=useState(addresses[0])
     const [selectedPaymentMethod,setSelectedPaymentMethod]=useState('cash')
-    const { register, handleSubmit, watch, reset,formState: { errors }} = useForm()
+    const { register, handleSubmit, reset } = useForm()
     const dispatch=useDispatch()
     const loggedInUser=useSelector(selectLoggedInUser)
     const addressStatus=useSelector(selectAddressStatus)
@@ -40,14 +40,14 @@ export const Checkout = () => {
         else if(addressStatus==='rejected'){
             alert('Error adding your address')
         }
-    },[addressStatus])
+    },[addressStatus, reset])
 
     useEffect(()=>{
         if(currentOrder && currentOrder?._id){
             dispatch(resetCartByUserIdAsync(loggedInUser?._id))
             navigate(`/order-success/${currentOrder?._id}`)
         }
-    },[currentOrder])
+    },[currentOrder, dispatch, loggedInUser?._id, navigate])
     
     const handleAddAddress=(data)=>{
         const address={...data,user:loggedInUser._id}

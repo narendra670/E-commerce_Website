@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 
 export const ProductUpdate = () => {
 
-    const {register,handleSubmit,watch,formState: { errors }} = useForm()
+    const {register,handleSubmit} = useForm()
 
     const {id}=useParams()
     const dispatch=useDispatch()
@@ -28,7 +28,7 @@ export const ProductUpdate = () => {
         if(id){
             dispatch(fetchProductByIdAsync(id))
         }
-    },[id])
+    },[id, dispatch])
 
     useEffect(()=>{
         if(productUpdateStatus==='fullfilled'){
@@ -38,14 +38,14 @@ export const ProductUpdate = () => {
         else if(productUpdateStatus==='rejected'){
             toast.error("Error updating product, please try again later")
         }
-    },[productUpdateStatus])
+    },[productUpdateStatus, navigate])
 
     useEffect(()=>{
         return ()=>{
             dispatch(clearSelectedProduct())
             dispatch(resetProductUpdateStatus())
         }
-    },[])
+    },[dispatch])
 
     const handleProductUpdate=(data)=>{
         const productUpdate={...data,_id:selectedProduct._id,images:[data?.image0,data?.image1,data?.image2,data?.image3]}

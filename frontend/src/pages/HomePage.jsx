@@ -15,7 +15,7 @@ export const HomePage = () => {
 
       dispatch(resetAddressStatus())
     }
-  },[addressStatus])
+  },[addressStatus, dispatch])
 
   return (
     <>

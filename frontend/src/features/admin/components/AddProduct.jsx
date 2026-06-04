@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate} from 'react-router-dom'
-import { addProductAsync, resetProductAddStatus, selectProductAddStatus,updateProductByIdAsync } from '../../products/ProductSlice'
+import { addProductAsync, resetProductAddStatus, selectProductAddStatus } from '../../products/ProductSlice'
 import { Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { useForm } from "react-hook-form"
 import { selectBrands } from '../../brands/BrandSlice'
@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 
 export const AddProduct = () => {
 
-    const {register,handleSubmit,reset,formState: { errors }} = useForm()
+    const {register,handleSubmit,reset} = useForm()
 
     const dispatch=useDispatch()
     const brands=useSelector(selectBrands)
@@ -30,13 +30,13 @@ export const AddProduct = () => {
         else if(productAddStatus==='rejected'){
             toast.error("Error adding product, please try again later")
         }
-    },[productAddStatus])
+    },[productAddStatus, navigate, reset])
 
     useEffect(()=>{
         return ()=>{
             dispatch(resetProductAddStatus())
         }
-    },[])
+    },[dispatch])
 
     const handleAddProduct=(data)=>{
         const newProduct={...data,images:[data.image0,data.image1,data.image2,data.image3]}

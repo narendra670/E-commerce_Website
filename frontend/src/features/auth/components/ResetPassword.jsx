@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from 'react-redux'
 import {clearResetPasswordError, clearResetPasswordSuccessMessage, resetPasswordAsync, resetResetPasswordStatus, selectResetPasswordError, selectResetPasswordStatus, selectResetPasswordSuccessMessage } from '../AuthSlice'
 import { LoadingButton } from '@mui/lab'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {MotionConfig,motion} from 'framer-motion'
 
 export const ResetPassword = () => {
@@ -26,7 +26,7 @@ export const ResetPassword = () => {
         return ()=>{
             dispatch(clearResetPasswordError())
         }
-    },[error])
+    },[error, dispatch])
 
     useEffect(()=>{
         if(status==='fullfilled'){
@@ -36,13 +36,13 @@ export const ResetPassword = () => {
         return ()=>{
             dispatch(clearResetPasswordSuccessMessage())
         }
-    },[status])
+    },[status, dispatch, navigate, successMessage?.message])
 
     useEffect(()=>{
         return ()=>{
             dispatch(resetResetPasswordStatus())
         }
-    },[])
+    },[dispatch])
 
     const handleResetPassword=async(data)=>{
         const cred={...data,userId:userId,token:passwordResetToken}

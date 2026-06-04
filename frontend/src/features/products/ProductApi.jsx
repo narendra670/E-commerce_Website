@@ -13,12 +13,12 @@ export const fetchProducts=async(filters)=>{
     let queryString=''
 
     if(filters.brand){
-        filters.brand.map((brand)=>{
+        filters.brand.forEach((brand)=>{
             queryString+=`brand=${brand}&`
         })
     }
     if(filters.category){
-        filters.category.map((category)=>{
+        filters.category.forEach((category)=>{
             queryString+=`category=${category}&`
         })
     }
