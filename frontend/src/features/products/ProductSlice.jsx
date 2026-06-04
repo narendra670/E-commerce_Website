@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { ensureArray } from "../../utils/ensureArray";
 import { addProduct, deleteProductById, fetchProductById, fetchProducts, undeleteProductById, updateProductById } from "./ProductApi";
 
 
@@ -88,7 +89,7 @@ const productSlice=createSlice({
             })
             .addCase(fetchProductsAsync.fulfilled,(state,action)=>{
                 state.productFetchStatus='fullfilled'
-                state.products=action.payload.data
+                state.products=ensureArray(action.payload?.data)
                 state.totalResults=action.payload.totalResults
             })
             .addCase(fetchProductsAsync.rejected,(state,action)=>{
@@ -151,7 +152,7 @@ const productSlice=createSlice({
 
 // exporting selectors
 export const selectProductStatus=(state)=>state.ProductSlice.status
-export const selectProducts=(state)=>state.ProductSlice.products
+export const selectProducts=(state)=>ensureArray(state.ProductSlice.products)
 export const selectProductTotalResults=(state)=>state.ProductSlice.totalResults
 export const selectSelectedProduct=(state)=>state.ProductSlice.selectedProduct
 export const selectProductErrors=(state)=>state.ProductSlice.errors

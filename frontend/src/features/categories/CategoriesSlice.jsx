@@ -1,4 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import { ensureArray } from '../../utils/ensureArray'
 import { fetchAllCategories } from './CategoriesApi'
 
 const initialState={
@@ -23,7 +24,7 @@ const categorySlice=createSlice({
             })
             .addCase(fetchAllCategoriesAsync.fulfilled,(state,action)=>{
                 state.status='fulfilled'
-                state.categories=action.payload
+                state.categories=ensureArray(action.payload)
             })
             .addCase(fetchAllCategoriesAsync.rejected,(state,action)=>{
                 state.status='rejected'
@@ -35,7 +36,7 @@ const categorySlice=createSlice({
 
 // exporting selectors
 export const selectCategoryStatus=(state)=>state.CategoriesSlice.status
-export const selectCategories=(state)=>state.CategoriesSlice.categories
+export const selectCategories=(state)=>ensureArray(state.CategoriesSlice.categories)
 export const selectCategoryErrors=(state)=>state.CategoriesSlice.errors
 
 export default categorySlice.reducer

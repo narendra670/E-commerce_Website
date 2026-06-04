@@ -1,4 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import { ensureArray } from '../../utils/ensureArray'
 import { createReview, deleteReviewById, fetchReviewsByProductId, updateReviewById } from './ReviewApi'
 
 
@@ -69,7 +70,7 @@ const reviewSlice=createSlice({
             })
             .addCase(fetchReviewsByProductIdAsync.fulfilled,(state,action)=>{
                 state.reviewFetchStatus='fulfilled'
-                state.reviews=action.payload
+                state.reviews=ensureArray(action.payload)
             })
             .addCase(fetchReviewsByProductIdAsync.rejected,(state,action)=>{
                 state.reviewFetchStatus='rejected'
@@ -106,7 +107,7 @@ const reviewSlice=createSlice({
 
 // exporting selectors
 export const selectReviewStatus=(state)=>state.ReviewSlice.status
-export const selectReviews=(state)=>state.ReviewSlice.reviews
+export const selectReviews=(state)=>ensureArray(state.ReviewSlice.reviews)
 export const selectReviewErrors=(state)=>state.ReviewSlice.errors
 export const selectReviewSuccessMessage=(state)=>state.ReviewSlice.successMessage
 export const selectReviewAddStatus=(state)=>state.ReviewSlice.reviewAddStatus

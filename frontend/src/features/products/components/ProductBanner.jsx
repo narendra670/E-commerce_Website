@@ -5,6 +5,8 @@ import 'swiper/css/pagination';
 import { Box } from '@mui/material';
 
 export const ProductBanner = ({ images }) => {
+  const imageList = Array.isArray(images) ? images : []
+
   return (
     <Swiper
       modules={[Autoplay, Pagination]}
@@ -12,7 +14,7 @@ export const ProductBanner = ({ images }) => {
       pagination={{ clickable: true }}
       style={{ overflow: 'hidden', width: '100%', height: '100%' }}
     >
-      {images.map((image, index) => (
+      {imageList.map((image, index) => (
         <SwiperSlide key={index}>
           <Box component="img" sx={{ width: '100%', objectFit: 'contain' }} src={image} alt={'Banner Image'} />
         </SwiperSlide>

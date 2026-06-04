@@ -12,7 +12,7 @@ export const createWishlistItem=async(data)=>{
 export const fetchWishlistByUserId=async(id)=>{
     try {
         const res=await axiosi.get(`/wishlist/user/${id}`)
-        const totalResults=await res.headers.get("X-Total-Count")
+        const totalResults=res.headers['x-total-count']
         return {data:res.data,totalResults:totalResults}
     } catch (error) {
         throw error.response.data

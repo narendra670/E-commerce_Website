@@ -1,4 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import { ensureArray } from '../../utils/ensureArray'
 import {addToCart,fetchCartByUserId,updateCartItemById,deleteCartItemById, resetCartByUserId} from './CartApi'
 
 const initialState={
@@ -61,7 +62,7 @@ const cartSlice=createSlice({
             })
             .addCase(fetchCartByUserIdAsync.fulfilled,(state,action)=>{
                 state.status='fulfilled'
-                state.items=action.payload
+                state.items=ensureArray(action.payload)
             })
             .addCase(fetchCartByUserIdAsync.rejected,(state,action)=>{
                 state.status='rejected'
@@ -109,7 +110,7 @@ const cartSlice=createSlice({
 
 // exporting selectors
 export const selectCartStatus=(state)=>state.CartSlice.status
-export const selectCartItems=(state)=>state.CartSlice.items
+export const selectCartItems=(state)=>ensureArray(state.CartSlice.items)
 export const selectCartErrors=(state)=>state.CartSlice.errors
 export const selectCartSuccessMessage=(state)=>state.CartSlice.successMessage
 export const selectCartItemAddStatus=(state)=>state.CartSlice.cartItemAddStatus

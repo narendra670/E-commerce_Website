@@ -1,4 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import { ensureArray } from '../../utils/ensureArray'
 import { createWishlistItem, deleteWishlistItemById, fetchWishlistByUserId, updateWishlistItemById } from './WishlistApi'
 
 const initialState={
@@ -66,8 +67,8 @@ const wishlistSlice=createSlice({
             })
             .addCase(fetchWishlistByUserIdAsync.fulfilled,(state,action)=>{
                 state.wishlistFetchStatus='fulfilled'
-                state.items=action.payload.data
-                state.totalResults=action.payload.totalResults
+                state.items=ensureArray(action.payload?.data)
+                state.totalResults=action.payload?.totalResults ?? 0
             })
             .addCase(fetchWishlistByUserIdAsync.rejected,(state,action)=>{
                 state.wishlistFetchStatus='rejected'
@@ -103,7 +104,7 @@ const wishlistSlice=createSlice({
 
 
 // exporting selectors
-export const selectWishlistItems=(state)=>state.WishlistSlice.items
+export const selectWishlistItems=(state)=>ensureArray(state.WishlistSlice.items)
 export const selectWishlistFetchStatus=(state)=>state.WishlistSlice.wishlistFetchStatus
 export const selectWishlistItemUpdateStatus=(state)=>state.WishlistSlice.wishlistItemUpdateStatus
 export const selectWishlistItemAddStatus=(state)=>state.WishlistSlice.wishlistItemAddStatus

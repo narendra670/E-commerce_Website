@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { ensureArray } from "../../utils/ensureArray";
 import { addAddress, deleteAddressById, fetchAddressByUserId, updateAddressById } from "./AddressApi";
 
 
@@ -66,7 +67,7 @@ const addressSlice=createSlice({
             })
             .addCase(fetchAddressByUserIdAsync.fulfilled,(state,action)=>{
                 state.status='fulfilled'
-                state.addresses=action.payload
+                state.addresses=ensureArray(action.payload)
             })
             .addCase(fetchAddressByUserIdAsync.rejected,(state,action)=>{
                 state.status='rejected'
@@ -102,7 +103,7 @@ const addressSlice=createSlice({
 
 // exporting selectors
 export const selectAddressStatus=(state)=>state.AddressSlice.status
-export const selectAddresses=(state)=>state.AddressSlice.addresses
+export const selectAddresses=(state)=>ensureArray(state.AddressSlice.addresses)
 export const selectAddressErrors=(state)=>state.AddressSlice.errors
 export const selectAddressSuccessMessage=(state)=>state.AddressSlice.successMessage
 export const selectAddressAddStatus=(state)=>state.AddressSlice.addressAddStatus

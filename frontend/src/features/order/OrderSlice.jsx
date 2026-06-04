@@ -1,4 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import { ensureArray } from '../../utils/ensureArray'
 import { createOrder, getAllOrders, getOrderByUserId, updateOrderById } from './OrderApi'
 
 
@@ -66,7 +67,7 @@ const orderSlice=createSlice({
             })
             .addCase(getAllOrdersAsync.fulfilled,(state,action)=>{
                 state.orderFetchStatus='fulfilled'
-                state.orders=action.payload
+                state.orders=ensureArray(action.payload)
             })
             .addCase(getAllOrdersAsync.rejected,(state,action)=>{
                 state.orderFetchStatus='rejected'
@@ -78,7 +79,7 @@ const orderSlice=createSlice({
             })
             .addCase(getOrderByUserIdAsync.fulfilled,(state,action)=>{
                 state.orderFetchStatus='fulfilled'
-                state.orders=action.payload
+                state.orders=ensureArray(action.payload)
             })
             .addCase(getOrderByUserIdAsync.rejected,(state,action)=>{
                 state.orderFetchStatus='rejected'
@@ -105,7 +106,7 @@ export const {resetCurrentOrder,resetOrderUpdateStatus,resetOrderFetchStatus}=or
 
 // exporting selectors
 export const selectOrderStatus=(state)=>state.OrderSlice.status
-export const selectOrders=(state)=>state.OrderSlice.orders
+export const selectOrders=(state)=>ensureArray(state.OrderSlice.orders)
 export const selectOrdersErrors=(state)=>state.OrderSlice.errors
 export const selectOrdersSuccessMessage=(state)=>state.OrderSlice.successMessage
 export const selectCurrentOrder=(state)=>state.OrderSlice.currentOrder
