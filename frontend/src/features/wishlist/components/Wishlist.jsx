@@ -39,8 +39,8 @@ export const Wishlist = () => {
     }
 
     else if(!e.target.checked){
-        const index=wishlistItems.findIndex((item)=>item.product._id===productId)
-        dispatch(deleteWishlistItemByIdAsync(wishlistItems[index]._id));
+        const index=(wishlistItems ?? []).findIndex((item)=>item.product._id===productId)
+        dispatch(deleteWishlistItemByIdAsync(wishlistItems?.[index]?._id));
     }
   } 
 
@@ -155,7 +155,7 @@ export const Wishlist = () => {
             <Stack >
 
               {
-                !wishlistFetchStatus==='pending' && wishlistItems?.length===0?(
+                wishlistFetchStatus!=='pending' && Array.isArray(wishlistItems) && wishlistItems.length===0?(
                   // empty wishlist animation
                   <Stack minHeight={'60vh'} width={is642?'auto':'40rem'} justifySelf={'center'}  alignSelf={'center'} justifyContent={'center'} alignItems={'center'}>
                     <Lottie animationData={emptyWishlistAnimation}/>
@@ -165,7 +165,7 @@ export const Wishlist = () => {
                 // wishlist grid
                 <Grid container gap={1} justifyContent={'center'} alignContent={'center'}>
                   {
-                    wishlistItems.map((item,index)=>(
+                    (wishlistItems ?? []).map((item,index)=>(
                       <Stack component={is480?"":Paper} elevation={1} >
 
                           <ProductCard item key={item._id} brand={item.product.brand.name} id={item.product._id} price={item.product.price} stockQuantity={item.product.stockQuantity} thumbnail={item.product.thumbnail} title={item.product.title} handleAddRemoveFromWishlist={handleAddRemoveFromWishlist} isWishlistCard={true}/>
@@ -198,7 +198,7 @@ export const Wishlist = () => {
                           }
 
                           {
-                            cartItems.some((cartItem)=>cartItem.product._id===item.product._id)?
+                            (cartItems ?? []).some((cartItem)=>cartItem.product._id===item.product._id)?
                             <Button sx={{mt:4}} size='small' variant='outlined' component={Link} to={'/cart'}>Already in cart</Button>:<Button sx={{mt:4}} size='small' onClick={()=>handleAddToCart(item.product._id)} variant='outlined'>Add To Cart</Button>
                           }
                           

@@ -82,7 +82,7 @@ export const Reviews = ({productId,averageRating}) => {
         2:0,
         1:0
     };
-    (reviews ?? []).filter(Boolean).forEach((review)=>{
+    (Array.isArray(reviews) ? reviews : []).filter(Boolean).forEach((review)=>{
         ratingCounts[review.rating]=ratingCounts[review.rating]+1
     })
 
@@ -135,7 +135,7 @@ export const Reviews = ({productId,averageRating}) => {
 
             {/* reviews mapping */}
             <Stack rowGap={2} >
-                {(reviews ?? []).filter(Boolean).map((review)=>(<ReviewItem key={review._id} id={review._id} userid={review.user?._id} comment={review.comment} createdAt={review.createdAt} rating={review.rating} username={review.user?.name} />))}
+                {(Array.isArray(reviews) ? reviews : []).filter(Boolean).map((review)=>(<ReviewItem key={review._id} id={review._id} userid={review.user?._id} comment={review.comment} createdAt={review.createdAt} rating={review.rating} username={review.user?.name} />))}
             </Stack>
 
             

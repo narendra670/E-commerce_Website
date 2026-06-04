@@ -80,7 +80,7 @@ export const ProductUpdate = () => {
                         <Select defaultValue={selectedProduct.brand._id} {...register("brand",{required:"Brand is required"})} labelId="brand-selection" label="Brand">
                             
                             {
-                                brands.map((brand)=>(
+                                (brands ?? []).map((brand)=>(
                                     <MenuItem value={brand._id}>{brand.name}</MenuItem>
                                 ))
                             }
@@ -94,7 +94,7 @@ export const ProductUpdate = () => {
                         <Select defaultValue={selectedProduct.category._id} {...register("category",{required:"category is required"})} labelId="category-selection" label="Category">
                             
                             {
-                                categories.map((category)=>(
+                                (categories ?? []).map((category)=>(
                                     <MenuItem value={category._id}>{category.name}</MenuItem>
                                 ))
                             }
@@ -135,7 +135,7 @@ export const ProductUpdate = () => {
 
                     <Stack rowGap={2}>
                         {
-                            selectedProduct.images.map((image,index)=>(
+                            (selectedProduct.images ?? []).map((image,index)=>(
                                 <TextField {...register(`image${index}`,{required:"Image is required",value:image})}/>
                             ))
                         }

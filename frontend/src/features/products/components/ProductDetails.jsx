@@ -51,14 +51,14 @@ export const ProductDetails = () => {
 
 
 
-    const isProductAlreadyInCart=cartItems.some((item)=>item.product._id===id)
-    const isProductAlreadyinWishlist=wishlistItems.some((item)=>item.product._id===id)
+    const isProductAlreadyInCart=(cartItems ?? []).some((item)=>item.product._id===id)
+    const isProductAlreadyinWishlist=(wishlistItems ?? []).some((item)=>item.product._id===id)
 
     const productFetchStatus=useSelector(selectProductFetchStatus)
     const reviewFetchStatus=useSelector(selectReviewFetchStatus)
 
-    const totalReviewRating=reviews.reduce((acc,review)=>acc+review.rating,0)
-    const totalReviews=reviews.length
+    const totalReviewRating=(reviews ?? []).reduce((acc,review)=>acc+review.rating,0)
+    const totalReviews=Array.isArray(reviews)?reviews.length:0
     const averageRating=totalReviews?parseInt(Math.ceil(totalReviewRating/totalReviews)):0
 
     const wishlistItemAddStatus=useSelector(selectWishlistItemAddStatus)
@@ -160,8 +160,8 @@ export const ProductDetails = () => {
         }
 
         else if(!e.target.checked){
-            const index=wishlistItems.findIndex((item)=>item.product._id===id)
-            dispatch(deleteWishlistItemByIdAsync(wishlistItems[index]._id));
+            const index=(wishlistItems ?? []).findIndex((item)=>item.product._id===id)
+            dispatch(deleteWishlistItemByIdAsync(wishlistItems?.[index]?._id));
         }
     }
 
@@ -187,7 +187,7 @@ export const ProductDetails = () => {
                         {/* image selection */}
                         {!is1420 && <Stack sx={{display:"flex",rowGap:'1.5rem',height:"100%",overflowY:"scroll"}}>
                             {
-                                product && product.images.map((image,index)=>(
+                                product?.images?.map((image,index)=>(
                                     <motion.div key={index} whileHover={{scale:1.1}} whileTap={{scale:1}} style={{width:"200px",cursor:"pointer"}} onClick={()=>setSelectedImageIndex(index)}>
                                         <img style={{width:"100%",objectFit:"contain"}} src={image} alt={product.title} />
                                     </motion.div>
@@ -206,7 +206,7 @@ export const ProductDetails = () => {
                                       navigation
                                       style={{ width: '100%', height: '100%' }}
                                     >
-                                      {product?.images.map((image, index) => (
+                                      {product?.images?.map((image, index) => (
                                         <SwiperSlide key={index}>
                                           <Box component="img" sx={{ width: '100%', objectFit: 'contain', overflow: 'hidden', aspectRatio: 1/1 }} src={image} alt={product?.title} />
                                         </SwiperSlide>

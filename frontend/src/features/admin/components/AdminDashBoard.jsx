@@ -187,7 +187,7 @@ export const AdminDashBoard = () => {
      
         <Grid gap={2} container flex={1} justifyContent={'center'} alignContent={"center"}>
             {
-                products.map((product)=>(
+                (products ?? []).map((product)=>(
                     <Stack>
                         <Stack sx={{opacity:product.isDeleted ? 0.7 : 1}}>
                             <ProductCard key={product._id} id={product._id} title={product.title} thumbnail={product.thumbnail} brand={product.brand?.name || ''} price={product.price} isAdminCard={true}/>

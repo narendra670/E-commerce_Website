@@ -102,7 +102,7 @@ export const UserOrders = () => {
 
                         {/* orders mapping */}
                         {
-                            orders && orders.map((order)=>(
+                            (orders ?? []).map((order)=>(
                                 <Stack p={is480?0:2} component={is480?"":Paper} elevation={1} rowGap={2}>
                                     
                                     {/* upper */}
@@ -125,7 +125,7 @@ export const UserOrders = () => {
                                         </Stack>
 
                                         <Stack>
-                                            <Typography>Item: {order.item.length}</Typography>
+                                            <Typography>Item: {order.item?.length ?? 0}</Typography>
                                         </Stack>
                                     </Stack>
 
@@ -133,7 +133,7 @@ export const UserOrders = () => {
                                     <Stack rowGap={2}>
 
                                         {
-                                            order.item.map((product)=>(
+                                            (order.item ?? []).map((product)=>(
                                                 
                                                 <Stack mt={2} flexDirection={'row'} rowGap={is768?'2rem':''} columnGap={4} flexWrap={is768?"wrap":"nowrap"}>
                                                     
@@ -157,7 +157,7 @@ export const UserOrders = () => {
                                                         <Stack mt={2} alignSelf={is480?"flex-start":'flex-end'} flexDirection={'row'} columnGap={2} >
                                                             <Button size='small' component={Link} to={`/product-details/${product.product._id}`} variant='outlined'>View Product</Button>
                                                             {
-                                                                cartItems.some((cartItem)=>cartItem.product._id===product.product._id)?
+                                                                (cartItems ?? []).some((cartItem)=>cartItem.product._id===product.product._id)?
                                                                 <Button  size='small' variant='contained' component={Link} to={"/cart"}>Already in Cart</Button>
                                                                 :<Button  size='small' variant='contained' onClick={()=>handleAddToCart(product.product)}>Buy Again</Button>
                                                             }
@@ -185,7 +185,7 @@ export const UserOrders = () => {
                         
                         {/* no orders animation */}
                         {
-                        !orders.length && 
+                        Array.isArray(orders) && !orders.length && 
                             <Stack mt={is480?'2rem':0} mb={'7rem'} alignSelf={'center'} rowGap={2}>
 
                                 <Stack width={is660?"auto":'30rem'} height={is660?"auto":'30rem'}>

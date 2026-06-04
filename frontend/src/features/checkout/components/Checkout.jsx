@@ -18,7 +18,7 @@ export const Checkout = () => {
 
     const status=''
     const addresses=useSelector(selectAddresses)
-    const [selectedAddress,setSelectedAddress]=useState(addresses[0])
+    const [selectedAddress,setSelectedAddress]=useState(Array.isArray(addresses) ? addresses[0] : undefined)
     const [selectedPaymentMethod,setSelectedPaymentMethod]=useState('cash')
     const { register, handleSubmit, reset } = useForm()
     const dispatch=useDispatch()
@@ -28,7 +28,7 @@ export const Checkout = () => {
     const cartItems=useSelector(selectCartItems)
     const orderStatus=useSelector(selectOrderStatus)
     const currentOrder=useSelector(selectCurrentOrder)
-    const orderTotal=cartItems.reduce((acc,item)=>(item.product.price*item.quantity)+acc,0)
+    const orderTotal=(cartItems ?? []).reduce((acc,item)=>(item.product.price*item.quantity)+acc,0)
     const theme=useTheme()
     const is900=useMediaQuery(theme.breakpoints.down(900))
     const is480=useMediaQuery(theme.breakpoints.down(480))
@@ -127,7 +127,7 @@ export const Checkout = () => {
 
                 <Grid container gap={2} width={is900?"auto":'50rem'} justifyContent={'flex-start'} alignContent={'flex-start'}>
                         {
-                            addresses.map((address,index)=>(
+                            (addresses ?? []).map((address,index)=>(
                                 <FormControl item >
                                     <Stack key={address._id} p={is480?2:2} width={is480?'100%':'20rem'} height={is480?'auto':'15rem'}  rowGap={2} component={is480?Paper:Paper} elevation={1}>
 

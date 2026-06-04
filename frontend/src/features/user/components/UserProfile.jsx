@@ -153,7 +153,7 @@ export const UserProfile = () => {
                         {/* mapping on addresses here  */}
                         <Stack width={'100%'} rowGap={2}>
                             {
-                                addresses.length>0?(
+                                Array.isArray(addresses) && addresses.length>0?(
                                     addresses.map((address)=>(
                                         <Address key={address._id} id={address._id} city={address.city} country={address.country} phoneNumber={address.phoneNumber} postalCode={address.postalCode} state={address.state} street={address.street} type={address.type}/>
                                     ))

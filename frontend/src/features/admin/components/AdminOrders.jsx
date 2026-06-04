@@ -85,7 +85,7 @@ export const AdminOrders = () => {
       <Stack mt={5} mb={3} component={'form'} noValidate onSubmit={handleSubmit(handleUpdateOrder)}>
 
         {
-          orders.length?
+          Array.isArray(orders) && orders.length?
           <TableContainer sx={{width:is1620?"95vw":"auto",overflowX:'auto'}} component={Paper} elevation={2}>
             <Table aria-label="simple table">
               <TableHead>
@@ -105,7 +105,7 @@ export const AdminOrders = () => {
               <TableBody>
 
                 {
-                orders.length && orders.map((order,index) => (
+                Array.isArray(orders) && orders.length && orders.map((order,index) => (
 
                   <TableRow key={order._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
 
@@ -113,7 +113,7 @@ export const AdminOrders = () => {
                     <TableCell align="right">{order._id}</TableCell>
                     <TableCell align="right">
                       {
-                        order.item.map((product)=>(
+                        (order.item ?? []).map((product)=>(
                           <Stack mt={2} flexDirection={'row'} alignItems={'center'} columnGap={2}>
                             <Avatar src={product.product.thumbnail}></Avatar>
                             <Typography>{product.product.title}</Typography>
@@ -124,10 +124,10 @@ export const AdminOrders = () => {
                     <TableCell align="right">{order.total}</TableCell>
                     <TableCell align="right">
                       <Stack>
-                        <Typography>{order.address[0].street}</Typography>
-                        <Typography>{order.address[0].city}</Typography>
-                        <Typography>{order.address[0].state}</Typography>
-                        <Typography>{order.address[0].postalCode}</Typography>
+                        <Typography>{                        order.address?.[0]?.street}</Typography>
+                        <Typography>{order.address?.[0]?.city}</Typography>
+                        <Typography>{order.address?.[0]?.state}</Typography>
+                        <Typography>{order.address?.[0]?.postalCode}</Typography>
                       </Stack>
                     </TableCell>
                     <TableCell align="right">{order.paymentMode}</TableCell>
