@@ -27,5 +27,5 @@ export const useFetchLoggedInUserDetails = (deps) => {
             dispatch(fetchWishlistByUserIdAsync(loggedInUser?._id))
           }
         }
-    },[deps, dispatch, loggedInUser?._id, loggedInUser.isAdmin, loggedInUser?.isVerified])
+    },[deps, dispatch, loggedInUser?._id, loggedInUser?.isAdmin, loggedInUser?.isVerified])
 }
