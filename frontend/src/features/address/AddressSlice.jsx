@@ -47,6 +47,7 @@ const addressSlice=createSlice({
         resetAddressUpdateStatus:(state)=>{
             state.addressUpdateStatus="idle"
         },
+        resetAddress:()=>initialState,
     },
     extraReducers:(builder)=>{
         builder
@@ -111,6 +112,6 @@ export const selectAddressDeleteStatus=(state)=>state.AddressSlice.addressDelete
 export const selectAddressUpdateStatus=(state)=>state.AddressSlice.addressUpdateStatus
 
 // exporting reducers
-export const {resetAddressStatus,resetAddressAddStatus,resetAddressDeleteStatus,resetAddressUpdateStatus}=addressSlice.actions
+export const {resetAddressStatus,resetAddressAddStatus,resetAddressDeleteStatus,resetAddressUpdateStatus,resetAddress}=addressSlice.actions
 
 export default addressSlice.reducer

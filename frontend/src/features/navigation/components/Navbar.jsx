@@ -8,8 +8,9 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, useNavigate } from 'react-router-dom';
-import { Badge, Button, Stack, useMediaQuery, useTheme } from '@mui/material';
+import { Badge, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import { LoadingButton } from '@mui/lab';
 import { selectUserInfo } from '../../user/UserSlice';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { selectCartItems } from '../../cart/CartSlice';
@@ -18,11 +19,13 @@ import { selectWishlistItems } from '../../wishlist/WishlistSlice';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import TuneIcon from '@mui/icons-material/Tune';
 import { selectProductIsFilterOpen, toggleFilters } from '../../products/ProductSlice';
+import { useLogout } from '../../auth/components/Logout';
 
 
 
 export const Navbar=({isProductList=false})=> {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [logoutDialogOpen, setLogoutDialogOpen] = React.useState(false);
   const userInfo=useSelector(selectUserInfo)
   const cartItems=useSelector(selectCartItems)
   const loggedInUser=useSelector(selectLoggedInUser)
@@ -30,6 +33,7 @@ export const Navbar=({isProductList=false})=> {
   const dispatch=useDispatch()
   const theme=useTheme()
   const is480=useMediaQuery(theme.breakpoints.down(480))
+  const { logout, isLoggingOut } = useLogout()
 
   const wishlistItems=useSelector(selectWishlistItems)
   const isProductFilterOpen=useSelector(selectProductIsFilterOpen)
@@ -46,11 +50,24 @@ export const Navbar=({isProductList=false})=> {
     dispatch(toggleFilters())
   }
 
+  const handleLogoutClick = () => {
+    handleCloseUserMenu()
+    setLogoutDialogOpen(true)
+  }
+
+  const handleLogoutConfirm = async () => {
+    setLogoutDialogOpen(false)
+    await logout()
+  }
+
+  const handleLogoutCancel = () => {
+    setLogoutDialogOpen(false)
+  }
+
   const settings = [
     {name:"Home",to:"/"},
     {name:'Profile',to:loggedInUser?.isAdmin?"/admin/profile":"/profile"},
     {name:loggedInUser?.isAdmin?'Orders':'My orders',to:loggedInUser?.isAdmin?"/admin/orders":"/orders"},
-    {name:'Logout',to:"/logout"},
   ];
 
   return (
@@ -99,6 +116,9 @@ export const Navbar=({isProductList=false})=> {
                   <Typography component={Link} color={'text.primary'} sx={{textDecoration:"none"}} to={setting.to} textAlign="center">{setting.name}</Typography>
                 </MenuItem>
               ))}
+              <MenuItem onClick={handleLogoutClick}>
+                <Typography color={'text.primary'} sx={{textDecoration:"none"}} textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
             <Typography variant='h6' fontWeight={300}>{is480?`${userInfo?.name?.split(" ")?.[0] ?? ''}`:`Hey👋, ${userInfo?.name ?? ''}`}</Typography>
             {loggedInUser?.isAdmin && <Button variant='contained'>Admin</Button>}
@@ -129,6 +149,21 @@ export const Navbar=({isProductList=false})=> {
             </Stack>
           </Stack>
         </Toolbar>
+
+        <Dialog open={logoutDialogOpen} onClose={handleLogoutCancel}>
+          <DialogTitle>Logout</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to logout?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleLogoutCancel} disabled={isLoggingOut}>Cancel</Button>
+            <LoadingButton onClick={handleLogoutConfirm} loading={isLoggingOut} variant='contained' color='error'>
+              Logout
+            </LoadingButton>
+          </DialogActions>
+        </Dialog>
     </AppBar>
   );
 }

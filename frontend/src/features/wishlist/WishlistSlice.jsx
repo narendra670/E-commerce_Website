@@ -46,7 +46,7 @@ const wishlistSlice=createSlice({
         resetWishlistFetchStatus:(state)=>{
             state.wishlistFetchStatus='idle'
         },
-
+        resetWishlist:()=>initialState,
     },
     extraReducers:(builder)=>{
         builder
@@ -114,6 +114,6 @@ export const selectWishlistSuccessMessage=(state)=>state.WishlistSlice.successMe
 export const selectWishlistTotalResults=(state)=>state.WishlistSlice.totalResults
 
 // exporting actions
-export const {resetWishlistFetchStatus,resetWishlistItemAddStatus,resetWishlistItemDeleteStatus,resetWishlistItemUpdateStatus}=wishlistSlice.actions
+export const {resetWishlistFetchStatus,resetWishlistItemAddStatus,resetWishlistItemDeleteStatus,resetWishlistItemUpdateStatus,resetWishlist}=wishlistSlice.actions
 
 export default wishlistSlice.reducer

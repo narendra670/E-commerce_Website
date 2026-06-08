@@ -20,7 +20,9 @@ export const updateUserByIdAsync=createAsyncThunk('user/updateUserByIdAsync',asy
 const userSlice=createSlice({
     name:"userSlice",
     initialState:initialState,
-    reducers:{},
+    reducers:{
+        resetUserInfo:()=>initialState,
+    },
     extraReducers:(builder)=>{
         builder
             .addCase(fetchLoggedInUserByIdAsync.pending,(state)=>{
@@ -55,5 +57,7 @@ export const selectUserInfo=(state)=>state.UserSlice.userInfo
 export const selectUserErrors=(state)=>state.UserSlice.errors
 export const selectUserSuccessMessage=(state)=>state.UserSlice.successMessage
 
+
+export const {resetUserInfo}=userSlice.actions
 
 export default userSlice.reducer

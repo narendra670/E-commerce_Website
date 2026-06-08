@@ -4,7 +4,6 @@ import {
   Route, RouterProvider, createBrowserRouter, createRoutesFromElements
 } from "react-router-dom";
 import { selectIsAuthChecked, selectLoggedInUser } from './features/auth/AuthSlice';
-import { Logout } from './features/auth/components/Logout';
 import { Protected } from './features/auth/components/Protected';
 import { useAuthCheck } from "./hooks/useAuth/useAuthCheck";
 import { useFetchLoggedInUserDetails } from "./hooks/useAuth/useFetchLoggedInUserDetails";
@@ -29,7 +28,6 @@ function App() {
         <Route path='/login' element={<LoginPage/>}/>
         <Route path='/forgot-password' element={<ForgotPasswordPage/>}/>
         <Route path='/reset-password/:userId/:passwordResetToken' element={<ResetPasswordPage/>}/>
-        <Route exact path='/logout' element={<Protected><Logout/></Protected>}/>
         <Route exact path='/product-details/:id' element={<Protected><ProductDetailsPage/></Protected>}/>
 
         {

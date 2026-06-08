@@ -41,7 +41,8 @@ const cartSlice=createSlice({
         },
         resetCartItemRemoveStatus:(state)=>{
             state.cartItemRemoveStatus='idle'
-        }
+        },
+        resetCart:()=>initialState,
     },
     extraReducers:(builder)=>{
         builder
@@ -117,6 +118,6 @@ export const selectCartItemAddStatus=(state)=>state.CartSlice.cartItemAddStatus
 export const selectCartItemRemoveStatus=(state)=>state.CartSlice.cartItemRemoveStatus
 
 // exporting reducers
-export const {resetCartItemAddStatus,resetCartItemRemoveStatus}=cartSlice.actions
+export const {resetCartItemAddStatus,resetCartItemRemoveStatus,resetCart}=cartSlice.actions
 
 export default cartSlice.reducer
