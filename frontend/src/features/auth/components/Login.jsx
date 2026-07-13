@@ -78,15 +78,10 @@ export const Login = () => {
                       <LoadingButton fullWidth sx={{height:'2.5rem'}} loading={loginStatus==='pending'} type='submit' variant='contained'>Login</LoadingButton>
                     </motion.div>
 
-                    <Stack flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} flexWrap={'wrap-reverse'} >
-                      <MotionConfig whileHover={{x:2}} whileTap={{scale:1.050}}>
-                          <motion.div>
-                              <Typography sx={{textDecoration:"none",color:"text.primary"}} to={'/signup'} component={Link}>Don't have an account? <span style={{color:theme.palette.primary.dark}}>Register</span></Typography>
-                          </motion.div>
-                          <motion.div>
-                              <Typography sx={{textDecoration:"none",color:"text.primary"}} to={'/forgot-password'} component={Link}>Forgot password?</Typography>
-                          </motion.div>
-                      </MotionConfig>
+                    <Stack flexDirection={'row'} justifyContent={'center'} alignItems={'center'} flexWrap={'wrap-reverse'} >
+                        <motion.div whileHover={{x:2}} whileTap={{scale:1.050}}>
+                            <Typography sx={{textDecoration:"none",color:"text.primary"}} to={'/signup'} component={Link}>Don't have an account? <span style={{color:theme.palette.primary.dark}}>Register</span></Typography>
+                        </motion.div>
                     </Stack>
                 </Stack>
 

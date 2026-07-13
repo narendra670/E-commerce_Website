@@ -5,7 +5,7 @@ export const signup=async(cred)=>{
         const res=await axiosi.post("auth/signup",cred)
         return res.data
     } catch (error) {
-        throw error.response.data
+        throw new Error(error.response?.data?.message||"Signup failed")
     }
 }
 export const login=async(cred)=>{
@@ -13,7 +13,7 @@ export const login=async(cred)=>{
         const res=await axiosi.post("auth/login",cred)
         return res.data
     } catch (error) {
-        throw error.response.data
+        throw new Error(error.response?.data?.message||"Login failed")
     }
 }
 export const forgotPassword=async(cred)=>{
@@ -21,7 +21,7 @@ export const forgotPassword=async(cred)=>{
         const res=await axiosi.post("auth/forgot-password",cred)
         return res.data
     } catch (error) {
-        throw error.response.data
+        throw new Error(error.response?.data?.message||"Failed to send reset link")
     }
 }
 export const resetPassword=async(cred)=>{
@@ -29,15 +29,15 @@ export const resetPassword=async(cred)=>{
         const res=await axiosi.post("auth/reset-password",cred)
         return res.data
     } catch (error) {
-        throw error.response.data
+        throw new Error(error.response?.data?.message||"Failed to reset password")
     }
 }
-export const checkAuth=async(cred)=>{
+export const checkAuth=async()=>{
     try {
         const res=await axiosi.get("auth/check-auth")
         return res.data
     } catch (error) {
-        throw error.response.data
+        throw new Error(error.response?.data?.message||"Not authenticated")
     }
 }
 export const logout=async()=>{
@@ -45,6 +45,6 @@ export const logout=async()=>{
         const res=await axiosi.get("auth/logout")
         return res.data
     } catch (error) {
-        throw error.response.data
+        throw new Error(error.response?.data?.message||"Logout failed")
     }
 }

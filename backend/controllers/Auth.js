@@ -28,12 +28,14 @@ exports.signup=async(req,res)=>{
         // generating jwt token
         const token=generateToken(secureInfo)
 
+        const isProduction=process.env.NODE_ENV==='production'||process.env.PRODUCTION==='true'
+
         // sending jwt token in the response cookies
         res.cookie('token',token,{
-            sameSite:process.env.PRODUCTION==='true'?'None':'Lax',
-            maxAge:parseInt(process.env.COOKIE_EXPIRATION_DAYS) * 24 * 60 * 60 * 1000,
+            sameSite:isProduction?'None':'Lax',
+            maxAge:parseInt(process.env.COOKIE_EXPIRATION_DAYS || 30) * 24 * 60 * 60 * 1000,
             httpOnly:true,
-            secure:process.env.PRODUCTION==='true'
+            secure:isProduction
         })
 
         res.status(201).json(sanitizeUser(createdUser))
@@ -46,6 +48,8 @@ exports.signup=async(req,res)=>{
 
 exports.login=async(req,res)=>{
     try {
+        const isProduction=process.env.NODE_ENV==='production'||process.env.PRODUCTION==='true'
+
         // checking if user exists or not
         const existingUser=await User.findOne({email:req.body.email})
 
@@ -60,20 +64,20 @@ exports.login=async(req,res)=>{
 
             // sending jwt token in the response cookies
             res.cookie('token',token,{
-                sameSite:process.env.PRODUCTION==='true'?'None':'Lax',
-                maxAge:parseInt(process.env.COOKIE_EXPIRATION_DAYS) * 24 * 60 * 60 * 1000,
+                sameSite:isProduction?'None':'Lax',
+                maxAge:parseInt(process.env.COOKIE_EXPIRATION_DAYS || 30) * 24 * 60 * 60 * 1000,
                 httpOnly:true,
-                secure:process.env.PRODUCTION==='true'
+                secure:isProduction
             })
             return res.status(200).json(sanitizeUser(existingUser))
         }
 
         res.clearCookie('token',{
-            sameSite:process.env.PRODUCTION==='true'?'None':'Lax',
+            sameSite:isProduction?'None':'Lax',
             httpOnly:true,
-            secure:process.env.PRODUCTION==='true'
+            secure:isProduction
         });
-        return res.status(404).json({message:"Invalid Credentails"})
+        return res.status(401).json({message:"Invalid Credentails"})
     } catch (error) {
         console.log(error);
         res.status(500).json({message:'Some error occured while logging in, please try again later'})
@@ -168,10 +172,11 @@ exports.resetPassword=async(req,res)=>{
 
 exports.logout=async(req,res)=>{
     try {
+        const isProduction=process.env.NODE_ENV==='production'||process.env.PRODUCTION==='true'
         res.clearCookie('token',{
-            sameSite:process.env.PRODUCTION==='true'?'None':'Lax',
+            sameSite:isProduction?'None':'Lax',
             httpOnly:true,
-            secure:process.env.PRODUCTION==='true'
+            secure:isProduction
         })
         res.status(200).json({message:'Logout successful'})
     } catch (error) {
@@ -181,12 +186,13 @@ exports.logout=async(req,res)=>{
 
 exports.checkAuth=async(req,res)=>{
     try {
+        const isProduction=process.env.NODE_ENV==='production'||process.env.PRODUCTION==='true'
         const user=await User.findById(req.user._id)
         if(!user){
             res.clearCookie('token',{
-                sameSite:process.env.PRODUCTION==='true'?'None':'Lax',
+                sameSite:isProduction?'None':'Lax',
                 httpOnly:true,
-                secure:process.env.PRODUCTION==='true'
+                secure:isProduction
             })
             return res.status(401).json({message:"User not found, please login again"})
         }
